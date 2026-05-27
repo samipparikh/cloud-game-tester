@@ -1,0 +1,14 @@
+{
+  "name": "cloud-game-tester",
+  "version": "1.0.0",
+  "description": "Cloud gaming quality testing tool - passive observer + on-device agent",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0"
+  }
+}

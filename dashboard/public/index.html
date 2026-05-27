@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Game Tester - Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Cloud Game<span class="accent">Tester</span></h1>
+        <div class="header-controls">
+            <span class="connection-status" id="conn-status">Connecting...</span>
+            <button class="btn" id="btn-export">Export All</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="setup-section">
+            <h2>Quick Start</h2>
+            <div class="setup-cards">
+                <div class="setup-card">
+                    <h3>On-Device Agent</h3>
+                    <p>Inject this script into your browser running the cloud game:</p>
+                    <code class="code-block" id="agent-snippet"></code>
+                    <button class="btn btn-sm" onclick="copySnippet()">Copy</button>
+                </div>
+                <div class="setup-card">
+                    <h3>Passive Observer</h3>
+                    <div class="observer-form">
+                        <input type="text" id="obs-host" placeholder="Target host (e.g., streaming.server.com)">
+                        <button class="btn" id="btn-start-observer">Start Observer</button>
+                        <button class="btn btn-danger" id="btn-stop-observer" style="display:none;">Stop</button>
+                    </div>
+                    <div id="observer-status"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="live-section" id="live-section" style="display:none;">
+            <h2>Live Session <span class="session-id" id="live-session-id"></span></h2>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">FPS</div>
+                    <div class="metric-value" id="live-fps">--</div>
+                    <div class="metric-sub" id="live-fps-sub">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Latency (RTT)</div>
+                    <div class="metric-value" id="live-rtt">--</div>
+                    <div class="metric-sub">ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Resolution</div>
+                    <div class="metric-value" id="live-resolution">--</div>
+                    <div class="metric-sub" id="live-bitrate">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Input Delay</div>
+                    <div class="metric-value" id="live-input-delay">--</div>
+                    <div class="metric-sub">ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Packet Loss</div>
+                    <div class="metric-value" id="live-packet-loss">--</div>
+                    <div class="metric-sub" id="live-jitter">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Frame Drops</div>
+                    <div class="metric-value" id="live-drops">--</div>
+                    <div class="metric-sub" id="live-stutter">-</div>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-card">
+                    <h3>FPS Over Time</h3>
+                    <canvas id="chart-fps" height="150"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Network RTT</h3>
+                    <canvas id="chart-rtt" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="events-section">
+                <h3>Events Log</h3>
+                <div class="events-list" id="events-list"></div>
+            </div>
+        </section>
+
+        <section class="sessions-section">
+            <h2>Session History</h2>
+            <div id="sessions-list" class="sessions-list">
+                <p class="empty-state">No sessions recorded yet. Start the agent on a device to begin.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
