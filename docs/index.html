@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Game Tester</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Cloud Game<span class="accent">Tester</span></h1>
+        <div class="header-controls">
+            <span class="connection-status connected" id="conn-status">Standalone</span>
+            <button class="btn" id="btn-export">Export Report</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="setup-section">
+            <h2>Quick Start</h2>
+            <div class="setup-cards">
+                <div class="setup-card">
+                    <h3>1. Run On This Page (Demo)</h3>
+                    <p>Start capturing metrics from this browser — tests your device's rendering, input, and network capabilities.</p>
+                    <button class="btn" id="btn-start-test">Start Test Session</button>
+                    <button class="btn btn-danger" id="btn-stop-test" style="display:none;">Stop Test</button>
+                </div>
+                <div class="setup-card">
+                    <h3>2. Inject Into Cloud Game</h3>
+                    <p>Paste this bookmarklet in your cloud gaming browser tab's DevTools console:</p>
+                    <code class="code-block" id="agent-snippet"></code>
+                    <button class="btn btn-sm" id="btn-copy">Copy Bookmarklet</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="setup-section">
+            <h2>Self-Hosted Server (Optional)</h2>
+            <div class="setup-cards">
+                <div class="setup-card" style="grid-column: span 2;">
+                    <p>For real-time streaming to a dashboard with session history and passive network observer, run locally:</p>
+                    <code class="code-block">git clone https://github.com/samipparikh/cloud-game-tester && cd cloud-game-tester && npm install && npm start</code>
+                    <p style="margin-top:10px; color:#888;">Dashboard at <strong>http://localhost:3001</strong> — agents auto-stream metrics via WebSocket. Includes passive network observer for bandwidth/latency monitoring.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="live-section" id="live-section" style="display:none;">
+            <h2>Live Metrics <span class="session-id" id="live-session-id"></span></h2>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">FPS</div>
+                    <div class="metric-value" id="live-fps">--</div>
+                    <div class="metric-sub" id="live-fps-sub">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Frame Time</div>
+                    <div class="metric-value" id="live-frametime">--</div>
+                    <div class="metric-sub">ms avg</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Resolution</div>
+                    <div class="metric-value" id="live-resolution">--</div>
+                    <div class="metric-sub" id="live-bitrate">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Input Delay</div>
+                    <div class="metric-value" id="live-input-delay">--</div>
+                    <div class="metric-sub">ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Network RTT</div>
+                    <div class="metric-value" id="live-rtt">--</div>
+                    <div class="metric-sub" id="live-jitter">ms</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Stutters</div>
+                    <div class="metric-value" id="live-stutter">0</div>
+                    <div class="metric-sub" id="live-drops">-</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Memory</div>
+                    <div class="metric-value" id="live-memory">--</div>
+                    <div class="metric-sub">% heap</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Gamepad</div>
+                    <div class="metric-value" id="live-gamepad">--</div>
+                    <div class="metric-sub" id="live-gamepad-sub">not connected</div>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-card">
+                    <h3>FPS Over Time</h3>
+                    <canvas id="chart-fps" height="150"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Frame Time (ms)</h3>
+                    <canvas id="chart-frametime" height="150"></canvas>
+                </div>
+            </div>
+
+            <div class="events-section">
+                <h3>Event Log</h3>
+                <div class="events-list" id="events-list"></div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2>What Gets Measured</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Video & Stream</h3>
+                    <ul><li>Resolution & dynamic scaling</li><li>Dropped frames & drop rate</li><li>Buffering / stall events</li><li>Codec & decoder info</li></ul>
+                </div>
+                <div class="info-card">
+                    <h3>Performance</h3>
+                    <ul><li>FPS (avg / min / 1% low)</li><li>Frame time & jitter</li><li>Stutter detection</li><li>Long task count</li></ul>
+                </div>
+                <div class="info-card">
+                    <h3>Network</h3>
+                    <ul><li>RTT & jitter (WebRTC)</li><li>Packet loss & NACK count</li><li>Bandwidth (in/out)</li><li>Connection type & downlink</li></ul>
+                </div>
+                <div class="info-card">
+                    <h3>Input</h3>
+                    <ul><li>Gamepad buttons & axes</li><li>Input-to-process delay</li><li>Keyboard/mouse/touch</li><li>Polling rate & drift</li></ul>
+                </div>
+                <div class="info-card">
+                    <h3>Audio</h3>
+                    <ul><li>Output latency</li><li>Concealed samples</li><li>Sample rate</li><li>Dropout detection</li></ul>
+                </div>
+                <div class="info-card">
+                    <h3>Device Health</h3>
+                    <ul><li>Memory usage / pressure</li><li>Battery & thermal state</li><li>Error & crash count</li><li>Session stability</li></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="agent/game-tester-sdk.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
