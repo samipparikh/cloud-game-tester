@@ -35,6 +35,50 @@
         </section>
 
         <section class="setup-section">
+            <h2>Automated Test</h2>
+            <div class="setup-cards">
+                <div class="setup-card" style="grid-column: span 2;">
+                    <h3>Simulated Gameplay Test</h3>
+                    <p>Runs an automated test for a specified duration. Simulates gamepad inputs, stresses rendering, and captures comprehensive metrics — then auto-generates a report.</p>
+                    <div class="auto-test-controls">
+                        <div class="auto-test-row">
+                            <div class="auto-test-field">
+                                <label>Duration (seconds)</label>
+                                <div class="duration-selector">
+                                    <button class="btn-count" id="dur-minus">−</button>
+                                    <span id="test-duration">30</span>
+                                    <button class="btn-count" id="dur-plus">+</button>
+                                </div>
+                            </div>
+                            <div class="auto-test-field">
+                                <label>Simulate Inputs</label>
+                                <select id="input-sim-type">
+                                    <option value="gamepad">Gamepad (buttons + sticks)</option>
+                                    <option value="keyboard">Keyboard (WASD + actions)</option>
+                                    <option value="mouse">Mouse (movement + clicks)</option>
+                                    <option value="all" selected>All input types</option>
+                                </select>
+                            </div>
+                            <div class="auto-test-field">
+                                <label>Stress Level</label>
+                                <select id="stress-level">
+                                    <option value="light">Light (normal play)</option>
+                                    <option value="medium" selected>Medium (frequent)</option>
+                                    <option value="heavy">Heavy (rapid fire)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn" id="btn-auto-test">Run Automated Test</button>
+                        <div class="auto-test-progress" id="auto-test-progress" style="display:none;">
+                            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+                            <span class="progress-text" id="progress-text">Running... 0s / 30s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="setup-section">
             <h2>Self-Hosted Server (Optional)</h2>
             <div class="setup-cards">
                 <div class="setup-card" style="grid-column: span 2;">

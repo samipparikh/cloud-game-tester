@@ -56,6 +56,20 @@ h3 { color: #ccc; margin-bottom: 8px; font-size: 1em; }
 .empty-state { color: #555; font-style: italic; text-align: center; padding: 40px; }
 .session-id { color: #4ecdc4; font-size: 0.7em; font-weight: normal; }
 
+/* Automated test controls */
+.auto-test-controls { margin-top: 12px; }
+.auto-test-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.auto-test-field { display: flex; flex-direction: column; gap: 4px; }
+.auto-test-field label { color: #888; font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; }
+.auto-test-field select { padding: 8px 10px; border: 1px solid #2a2d37; border-radius: 6px; background: #0d0f14; color: #e0e0e0; font-size: 0.85em; }
+.duration-selector { display: flex; align-items: center; gap: 8px; }
+.duration-selector .btn-count { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #4ecdc4; background: transparent; color: #4ecdc4; font-size: 1em; cursor: pointer; }
+.duration-selector span { font-size: 1.3em; font-weight: 700; color: #fff; min-width: 36px; text-align: center; }
+.auto-test-progress { margin-top: 14px; }
+.progress-bar { height: 8px; background: #0d0f14; border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #4ecdc4, #44b8a8); border-radius: 4px; transition: width 1s linear; width: 0%; }
+.progress-text { color: #888; font-size: 0.8em; }
+
 /* How it works */
 .how-it-works { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
 .how-card { background: #1a1d27; border: 1px solid #2a2d37; border-radius: 10px; padding: 20px; position: relative; }
